@@ -48,9 +48,33 @@ app.get('/tarefas', (req, res) => {
     return res.json(tarefasFiltradas); //retorna as tarefas filtradas
 });
 
+// POST /tarefas - criar uma nova tarefa
+app.post('/tarefas', (req, res) => {
+
+    const { titulo } = req.body; // extrai o título do corpo da requisição
+
+    // valida se o título foi enviado e não está vazio
+    if (!titulo || titulo.trim() === '') {
+        return res.status(400).json({ erro: 'O título é obrigatório' });
+    }
+
+    // cria o objeto da nova tarefa
+    const novaTarefa = {
+        id: proximoId,        // usa o próximo ID disponível
+        titulo: titulo.trim(), // remove espaços extras do início e fim
+        concluida: false       // toda tarefa começa como não concluída
+    };
+
+    tarefas.push(novaTarefa); // adiciona a nova tarefa ao array
+    proximoId++;              // incrementa o ID para a próxima tarefa
+
+    // retorna a tarefa criada com status 201 (Created)
+    return res.status(201).json(novaTarefa);
+});
+
 
 //definindo porta para o servidor
-const PORT = 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Servidor rodando na porta http://localhost:${PORT}`);
 });
