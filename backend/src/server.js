@@ -1,56 +1,41 @@
-// let = valor pode ser alterado
-//const = valor não pode ser alterado
-
-//importando o express
+// importar o express
 const express = require('express');
+// importar o database
+const db = require('../src/database');
 
-//criando uma aplicação express
+// criar o servidor
 const app = express();
 
-//configurando o express para receber requisições com corpo em formato JSON
+// middleware para parsear o corpo da requisição
 app.use(express.json());
 
-/* concluida do tipo booleano, para indicar se a tarefa foi concluída ou não
-true = verdadeiro; false = falso */
-let tarefas = [
-    { id: 1, titulo: 'Preparar TCC', concluida: false},
-    { id: 2, titulo: 'Fazer atividade', concluida: true}
-];
-
-let proximoId = 3; //variável para controlar o próximo ID a ser atribuído
-
-//definindo uma rota para a raiz do site
-app.get('/', (req, res) => {
-    //res.send('Olá mundo!');
-    return res.json({ message: 'API de Tarefas funcionando!'});
-});
-
-// get /tarefas - listar todas as tarefas
-/*
-req = request (requisição) - objeto que representa a requisição feita pelo cliente
-res = response (resposta) - objeto que representa a resposta que será enviada para o cliente
-*/
+// rota GET para listar todas as tarefas
 app.get('/tarefas', (req, res) => {
-    // lÊ as tarefas e retorna em formato JSON
-    const { concluida} = req.query; //desestruturação para obter o valor de "concluida" da query string
-
-    // se não veio o filtro, devolve tudo.
-    if (concluida === undefined) {
-        return res.json(tarefas); //retorna todas as tarefas
-    }
-
-    // converter string para booleano
-    const valor = concluida === 'true'; //converte a string "true" para booleano true, e qualquer outra coisa para false
-
-    // filtra as tarefas com base no valor de "concluida"
-    const tarefasFiltradas = tarefas.filter((t) => t.concluida === valor);
-    
-    return res.json(tarefasFiltradas); //retorna as tarefas filtradas
+    db.query('SELECT * FROM tarefas', (err, result) => {
+        if (err) {
+            return res.status(500).json({ message: 'Erro ao buscar tarefas'});
+        }
+        res.json(result);
+    });
 });
 
+// rota POST para criar uma nova tarefa
 
-//definindo porta para o servidor
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+
+// rota PUT /:id para atualizar uma tarefa existente
+
+
+// rota DELETE /:id para deletar uma tarefa existente
+
+// iniciar o servidor
+app.listen(3000, () => {
+    console.log('Servidor rodando na porta http://localhost:3000');
 });
+
+// rota para testar a conexão com o banco de dados
+app.get('/', (req, res) => {
+    res.send('Conexão com o banco de dados estabelecida com sucesso!');
+});
+
+// exportar o app
+module.exports = app;
