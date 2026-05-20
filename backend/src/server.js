@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
 
+// CORS - serve para comunicação entre frontend e backend em domínios diferentes (ex: React e Node)
+const cors = require("cors");
+app.use(cors());
+
 // importa conexão com banco
 const db = require("./database");
 
