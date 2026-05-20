@@ -84,7 +84,7 @@ app.post("/tarefas", (req, res) => {
     db.query(
         sql,
         [
-            titulo.trim(),
+            titulo.trim(), // remove espaços extras
             descricao || null,
             status = "pendente"
         ],
@@ -111,8 +111,8 @@ app.post("/tarefas", (req, res) => {
 // PUT /tarefas/:id -> atualizar tarefa
 app.put("/tarefas/:id", (req, res) => {
 
-    const { id } = req.params;
-    const { titulo, descricao, status } = req.body;
+    const { id } = req.params; // id da tarefa a atualizar
+    const { titulo, descricao, status } = req.body; // dados para atualizar
 
     // valida título
     if (!titulo || titulo.trim() === "") {
@@ -178,8 +178,8 @@ app.patch("/tarefas/:id", (req, res) => {
     let valores = [];
 
     if (titulo) {
-        campos.push("titulo = ?");
-        valores.push(titulo.trim());
+        campos.push("titulo = ?"); // só atualiza se tiver valor
+        valores.push(titulo.trim()); // remove espaços extras
     }
 
     if (descricao) {
@@ -257,6 +257,7 @@ app.delete("/tarefas/:id", (req, res) => {
 const PORT = 3001;
 
 app.listen(PORT, () => {
+    // deixando claro que o backend está rodando e em qual porta
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
