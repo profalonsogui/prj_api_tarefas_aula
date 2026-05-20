@@ -1,6 +1,7 @@
 # Projeto API de tarefas com JS
 
 ## Estrutura de pastas
+```
 projeto/
 │
 ├── backend/
@@ -18,3 +19,4 @@ projeto/
 │
 ├── package.json
 └── README.md
+```
