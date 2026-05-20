@@ -17,14 +17,10 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-<<<<<<< HEAD
     "express": "^5.2.1",
     "mysql2": "^3.22.2"
-=======
-    "express": "^5.2.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
->>>>>>> aula-2904
   }
 }
