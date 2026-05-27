@@ -2,10 +2,11 @@ const mysql = require("mysql2");
 
 // cria conexão com banco
 const connection = mysql.createConnection({
-    host: "localhost",
+    host: "mysql",
     user: "root",
-    password: "",
-    database: "prj_apitarefas"
+    password: "root",
+    database: "prj_apitarefas",
+    port: 3306
 });
 
 // conecta
@@ -14,7 +15,8 @@ connection.connect((err) => {
         console.error("Erro ao conectar:", err);
         return;
     }
-    console.log("Conectado ao MySQL!");
+
+    console.log("Conectado ao MySQL via Docker!");
 });
 
 module.exports = connection;
