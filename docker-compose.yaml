@@ -14,6 +14,7 @@ services:
     container_name: mysql-api-tarefas
     restart: always
     environment:
+      MYSQL_USER: apiuser
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: prj_apitarefas
     ports:
